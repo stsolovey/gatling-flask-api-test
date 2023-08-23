@@ -18,9 +18,9 @@ Each test plan represents a different approach or methodology in load testing. B
 
 ```scala
 //=====RampUp Load=====
-rampUsersPerSec(1) // Starting number of users per sec
-.to(500)           // Final number of users per sec
-.during(1.hour) // Duration
+rampUsersPerSec(1)
+.to(500)
+.during(1.hour)
 ```
   
 - **Stepping Load**: Incrementally increases the number of users at set intervals. This is great for understanding how the system performs under progressively increasing load.
@@ -44,7 +44,7 @@ incrementConcurrentUsers(50)
 - **Spike Testing**: Introduces a sudden and large number of users to the system to see how it reacts to sudden spikes in demand.
 ```scala
 //=====Spike Testing======
-atOnceUsers(3000) // Send 500 users at once
+atOnceUsers(3000)
 ```
 - **Constant Load**: A fixed number of users are active for a set duration. Useful for testing how the system behaves under a constant demand.
 ```scala
