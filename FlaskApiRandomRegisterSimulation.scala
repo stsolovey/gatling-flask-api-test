@@ -4,11 +4,18 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.concurrent.duration._
 import scala.util.Random
+import com.typesafe.config.{Config, ConfigFactory}
+import java.io.File
 
 class FlaskApiRandomRegisterSimulation extends Simulation {
+  // print the current working directory (for those who look for application.conf)
+  // println(new java.io.File(".").getCanonicalPath) 
+  val conf = ConfigFactory.parseFile(new File("user-files/simulations/api_test_gatling/application.conf")).resolve()
+  
+  val baseUrl = conf.getString("my-config.base-url")
 
   val httpProtocol = http
-    .baseUrl("http://192.168.1.100:5000") 
+    .baseUrl(baseUrl) 
     .header("Content-Type", "application/json")
 
   // Custom Feeder for random user registration data
@@ -22,7 +29,7 @@ class FlaskApiRandomRegisterSimulation extends Simulation {
 
   val scn = scenario("Test Flask API: Registration Random Users")
   .feed(randomUserFeeder)
-  // Registration once
+  // Registration
   .exec(http("Registration Request")
     .post("/register")
     .body(StringBody("""{
